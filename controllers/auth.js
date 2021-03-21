@@ -6,7 +6,7 @@ const sqlite3 = require('sqlite3').verbose();
 // const fetch = require("node-fetch");
 
 const { registerValidation, loginValidation } = require("../models/validation");
-const url_adress = "http://localhost:8333";
+// const url_adress = "http://localhost:8333";
 
 
 //DB connect
@@ -16,13 +16,10 @@ let db = new sqlite3.Database('./db/texts.sqlite', (err) => {
   }
 });
 
-//Static files
-router.use("/", express.static("assets"));
+// //Static files - KANSKE BEHÅLLA????????????
+// router.use("/", express.static("assets"));
 
-//rego GET
-router.get("/rego", (req, res) => {
-    res.send("rego /");
-});
+
 
 
 
@@ -60,7 +57,7 @@ router.get("/rego", (req, res) => {
 // });
 
 //register-create POST
-router.post("/register-push", async (req, res) => {
+router.post("/register", async (req, res) => {
 
     //Validation
     const { error } = registerValidation(req.body);
@@ -156,7 +153,7 @@ router.post("/register-push", async (req, res) => {
 
 
 //login-push POST
-router.post("/login-push", async (req, res) => {
+router.post("/login", async (req, res) => {
     //Validation email and password
     const { error } = loginValidation(req.body);
     if (error) return res.json({ msg: "error", text: error.details[0].message });

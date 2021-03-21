@@ -23,6 +23,7 @@ const verify = require("./models/verifyToken");
 
 //Importing controllers
 const authRoute = require("./controllers/auth");
+const prodRoute = require("./controllers/prod");
 
 //Config
 dotenv.config();
@@ -53,5 +54,6 @@ app.get('/api', (req, res) => {
 
 //Middleware
 app.use("/user", authRoute);
+app.use("/prod", prodRoute);
 
 app.listen(port, () => console.log(`the server is running on port ${port}`));
