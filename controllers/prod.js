@@ -7,25 +7,31 @@ const fetch = require("node-fetch");
 
 const { registerValidation, loginValidation, addValidation } = require("../models/validation");
 const verify = require("../models/verifyToken");
+const SearchMethods = require('../models/search');
+
 const url_adress = "http://localhost:8333";
 
 
 //DB connect
 let db = new sqlite3.Database('./db/texts.sqlite', (err) => {
   if (err) {
-    console.error(err.message);
+      console.error(err.message);
   }
 });
 
-//talk-login GET
+//TEST GET FRONTEND ----------------------------------
 router.get("/test", async (req, res) => {
       console.log(req.headers.token);
       token = req.headers.token;
       try {
-          await fetch(`${url_adress}/prod/test2`, {
+          await fetch(`${url_adress}/prod/test-get`, {
               method: 'GET',
               mode: 'no-cors',
               headers: { "token": token }
+              }).then(function (response) {
+                  return response.json();
+              }).then(function (result) {
+                  res.json(result);
               })
       } catch(err) {
             console.log(err);
@@ -33,18 +39,18 @@ router.get("/test", async (req, res) => {
       }
 });
 
-
-
-//talk-login GET
-router.get("/test2", verify, async (req, res) => {
-    if (req.user == "Invalid token") {
-        console.log("fel");
-    } else {
-        console.log("succ");
+//TEST verify login GET
+router.get("/test-get", verify, async (req, res) => {
+    console.log("here YO!");
+    console.log(req.user);
+    if (req.user == "Invalid token" || req.user == "Access denied") {
+        res.json({ msg: req.user });
     }
-
-
-    res.json({ msg: "testzz" });
+    if (req.user.hasOwnProperty('id')) {
+        res.json({ msg: "success" });
+    } else {
+        res.json({ msg: "error" });
+    }
 });
 
 
@@ -54,38 +60,47 @@ router.get("/test2", verify, async (req, res) => {
 
 
 //---------------------
-router.post("/add", verify, async (req, res) => {
+router.post("/search", verify, async (req, res) => {
+    console.log(req.body);
+    console.log(req.headers);
 
     //Validation
-    const { error } = addValidation(req.body);
-    if (error) return res.json({ msg: "error", text: error.details[0].message });
-
-    //Kolla att TOKEN OK. Om inte return error.
+    // const { error } = addValidation(req.body);
+    // if (error) return res.json({ msg: "error", text: error.details[0].message });
 
 
 
-    //Random ID generated
-    let random_id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 
-    //Check if email exist
-    db.each("SELECT COUNT(*) AS total FROM users WHERE email LIKE ?",
-    req.body.email,(err, row) => {
-        if (row.total == 1) {
-            //Email exists
-        	return res.json({ msg: "error", text: "Email already exists" });
-        } else {
-            //Email does not exists
-            db.run("INSERT INTO users (name, email, password, backup_id) VALUES (?, ?, ?, ?)",
-				req.body.name, req.body.email, hashedPassword, random_id, (err) => {
-				if (err) {
-					res.json({ msg: "error", text: "Something went wrong while writing to database." });
-				} else {
-                    res.json({ msg: "success" });
-                }
-		    });
+    //Skicka in typ med header eller body.
+    let type = "gnss";
+
+    if (req.user == "Invalid token" || req.user == "Access denied") {
+        res.json({ msg: req.user });
+    }
+    if (req.user.hasOwnProperty('id')) {
+        //get info from database
+        if (type == "gnss") {
+            let gnss = await SearchMethods.getGnss();
+            //Filterar ut rätt
+            res.json(gnss);
         }
-    });
+        if (type == "totalstation") {
+            let total = await SearchMethods.getTodde();
+            //Filterar ut rätt
+            res.json(total);
+        }
+        if (type == "laserskanner") {
+            let skanner = await SearchMethods.getLaser();
+            //Filterar ut rätt
+            res.json(skanner);
+        }
+    } else {
+        res.json({ msg: "error" });
+    }
+
+
+
 });
 
 
