@@ -81,19 +81,19 @@ router.post("/search", verify, async (req, res) => {
     if (req.user.hasOwnProperty('id')) {
         //get info from database
         if (type == "gnss") {
-            let gnss = await SearchMethods.getGnss();
-            //Filterar ut rätt
-            res.json(gnss);
+            let gnssAll = await SearchMethods.getGnss();
+            let result = await SearchMethods.filterResult(gnssAll, req.body);
+            res.json(result);
         }
         if (type == "totalstation") {
-            let total = await SearchMethods.getTodde();
+            let totalAll = await SearchMethods.getTodde();
             //Filterar ut rätt
-            res.json(total);
+            res.json(totalAll);
         }
         if (type == "laserskanner") {
-            let skanner = await SearchMethods.getLaser();
+            let skannerAll = await SearchMethods.getLaser();
             //Filterar ut rätt
-            res.json(skanner);
+            res.json(skannerAll);
         }
     } else {
         res.json({ msg: "error" });

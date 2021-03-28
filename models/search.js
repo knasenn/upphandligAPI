@@ -56,9 +56,10 @@ module.exports = {
 
 
     //Get todde
-    filerResult: async function(type) {
+    filterResult: async function(gnssAll, required) {
         return new Promise(resolve => {
-            console.log(type);
+            console.log(gnssAll);
+            console.log(required);
             resolve("hej");
             // db.all("SELECT * FROM laserskanner", async (err, row) => {
             //     if (err) {
