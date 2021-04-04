@@ -26,40 +26,29 @@ module.exports = {
         })
     },
 
-    //Get todde
-    getTodde: async function() {
-        return new Promise(resolve => {
-            db.all("SELECT * FROM totalstation", async (err, row) => {
-                if (err) {
-                    console.log(err);
-                    resolve(err);
-                } else {
-                    resolve(row);
-                }
-            });
-        })
-    },
 
-    //Get todde
-    getSkanner: async function() {
-        return new Promise(resolve => {
-            db.all("SELECT * FROM laserskanner", async (err, row) => {
-                if (err) {
-                    console.log(err);
-                    resolve(err);
-                } else {
-                    resolve(row);
-                }
-            });
-        })
-    },
 
 
     //Get todde
     filterResult: async function(gnssAll, required) {
         return new Promise(resolve => {
-            console.log(gnssAll);
-            console.log(required);
+
+
+          gnssAll.forEach(function(entry) {
+            if (entry.id == 1) {
+              console.log("bajs1");
+              console.log(entry.id);
+              console.log("bajs1");
+            }
+            if (entry.id == 2) {
+              console.log("bajs2");
+              console.log(entry.id);
+              console.log("bajs2");
+            } 
+          });
+
+            // array1.forEach(element => console.log(element));
+
             resolve("hej");
             // db.all("SELECT * FROM laserskanner", async (err, row) => {
             //     if (err) {

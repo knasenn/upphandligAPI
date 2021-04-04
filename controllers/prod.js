@@ -61,8 +61,8 @@ router.get("/test-get", verify, async (req, res) => {
 
 //---------------------
 router.post("/search", verify, async (req, res) => {
-    console.log(req.body);
-    console.log(req.headers);
+    // console.log(req.body);
+    // console.log(req.headers);
 
     //Validation
     // const { error } = addValidation(req.body);
