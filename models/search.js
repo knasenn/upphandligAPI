@@ -32,33 +32,80 @@ module.exports = {
     //Get todde
     filterResult: async function(gnssAll, required) {
         return new Promise(resolve => {
+          console.log(gnssAll.length);
+          indexLength = gnssAll.length - 1;
+          listAll =  [];
+          listKeyReq = [];
+          for (var i = 0; i < gnssAll.length; i++) {
+              tillvModell = gnssAll[i].tillverkare + "-" + gnssAll[i].modell
+              listAll[tillvModell] = 0;
+          }
+          console.log(listAll);
 
 
-          gnssAll.forEach(function(entry) {
-            if (entry.id == 1) {
-              console.log("bajs1");
-              console.log(entry.id);
-              console.log("bajs1");
-            }
-            if (entry.id == 2) {
-              console.log("bajs2");
-              console.log(entry.id);
-              console.log("bajs2");
-            } 
-          });
+          for (const [keyReq, valueReq] of Object.entries(required)) {
+              this.testis(keyReq, gnssAll)
+          }
 
-            // array1.forEach(element => console.log(element));
+
+          console.log(listAll);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          //Nått är fel här
+          //Kör bara för första gnnsAll....
+
+
+          // for (const [keyReq, valueReq] of Object.entries(required)) {
+          //     for (const [keyAll, valueAll] of Object.entries(gnssAll[indexLength])) {
+          //         if (keyReq == keyAll) {
+          //           if (keyReq.charAt(0) == "-") {
+          //               //Checka att inom värde och isf adda men annars ej
+          //               listAll[tillvModell] = listAll[tillvModell] + 1;
+          //               console.log("minus");
+          //               break
+          //           } if (keyReq.charAt(0) == "+") {
+          //               //Checka att inom värde och isf adda men annars ej
+          //               listAll[tillvModell] = listAll[tillvModell] + 1;
+          //               console.log("plus");
+          //               break
+          //           } else {
+          //               //Checka att inom värde och isf adda men annars ej
+          //               listAll[tillvModell] = listAll[tillvModell] + 1;
+          //               console.log("Yolo");
+          //               break
+          //           }
+          //         }
+          //     }
+          // }
+          // console.log(listAll);
+
+
+
 
             resolve("hej");
-            // db.all("SELECT * FROM laserskanner", async (err, row) => {
-            //     if (err) {
-            //         console.log(err);
-            //         resolve(err);
-            //     } else {
-            //         resolve(row);
-            //     }
-            // });
+
         })
+    },
+
+    //Vid login
+    testis: async function() {
+        console.log("kaka");
     },
 
 
