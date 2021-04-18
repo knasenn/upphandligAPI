@@ -40,15 +40,89 @@ module.exports = {
               tillvModell = gnssAll[i].tillverkare + "-" + gnssAll[i].modell
               listAll[tillvModell] = 0;
           }
+
           console.log(listAll);
 
 
-          for (const [keyReq, valueReq] of Object.entries(required)) {
-              this.testis(keyReq, gnssAll)
+
+          // for (const [keyReq, valueReq] of Object.entries(required)) {
+          //     this.testis(keyReq, gnssAll)
+          // }
+
+
+
+          for (var i = 0; i < gnssAll.length; i++) {
+
+              for (const [keyAll, valueAll] of Object.entries(gnssAll[i])) {
+                  let currModell = gnssAll[i].tillverkare + "-" + gnssAll[i].modell;
+                  for (const [keyReq, valueReq] of Object.entries(required)) {
+                      if (keyReq == keyAll) {
+                        console.log("x");
+                        console.log(currModell);
+                        if (keyReq.charAt(0) == "-") {
+                            //Checka att inom värde och isf adda men annars ej
+                            listAll[currModell] = listAll[currModell] + 1;
+                            console.log("minus");
+                            break
+                        } if (keyReq.charAt(0) == "+") {
+                            //Checka att inom värde och isf adda men annars ej
+                            listAll[currModell] = listAll[currModell] + 1;
+                            console.log("plus");
+                            break
+                        } else {
+                            //Checka att inom värde och isf adda men annars ej
+                            listAll[currModell] = listAll[currModell] + 1;
+                            console.log("Yolo");
+                            break
+                        }
+                      }
+                  }
+              }
           }
 
-
           console.log(listAll);
+
+
+
+          //Grovt?
+          //Grovt?
+
+          // for (var i = 0; i < gnssAll.length; i++) {
+          //
+          //     for (const [keyAll, valueAll] of Object.entries(gnssAll[i])) {
+          //         let currModell = gnssAll[i].tillverkare + "-" + gnssAll[i].modell;
+          //         for (const [keyReq, valueReq] of Object.entries(required)) {
+          //             if (keyReq == keyAll) {
+          //               console.log("x");
+          //               console.log(currModell);
+          //               if (keyReq.charAt(0) == "-") {
+          //                   //Checka att inom värde och isf adda men annars ej
+          //                   listAll[currModell] = listAll[currModell] + 1;
+          //                   console.log("minus");
+          //                   break
+          //               } if (keyReq.charAt(0) == "+") {
+          //                   //Checka att inom värde och isf adda men annars ej
+          //                   listAll[currModell] = listAll[currModell] + 1;
+          //                   console.log("plus");
+          //                   break
+          //               } else {
+          //                   //Checka att inom värde och isf adda men annars ej
+          //                   listAll[currModell] = listAll[currModell] + 1;
+          //                   console.log("Yolo");
+          //                   break
+          //               }
+          //             }
+          //         }
+          //     }
+          // }
+          //
+          // console.log(listAll);
+
+
+
+
+
+
 
 
 
