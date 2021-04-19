@@ -57,21 +57,29 @@ module.exports = {
                   let currModell = gnssAll[i].tillverkare + "-" + gnssAll[i].modell;
                   for (const [keyReq, valueReq] of Object.entries(required)) {
                       if (keyReq == keyAll) {
-                        console.log("x");
-                        console.log(currModell);
                         if (keyReq.charAt(0) == "-") {
-                            //Checka att inom värde och isf adda men annars ej
-                            listAll[currModell] = listAll[currModell] + 1;
-                            console.log("minus");
-                            break
+                            if (valueReq >= valueAll) {
+                                listAll[currModell] = listAll[currModell] + 1;
+                                break;
+                            } else {
+                              break
+                            }
+
                         } if (keyReq.charAt(0) == "+") {
-                            //Checka att inom värde och isf adda men annars ej
-                            listAll[currModell] = listAll[currModell] + 1;
-                            console.log("plus");
-                            break
+                            if (valueReq <= valueAll) {
+                                listAll[currModell] = listAll[currModell] + 1;
+                                break;
+                            } else {
+                              break
+                            }
+                        } if (keyReq.charAt(0) == "_") {
+                            if (valueReq == valueAll) {
+                                listAll[currModell] = listAll[currModell] + 1;
+                                break;
+                            } else {
+                              break
+                            }
                         } else {
-                            //Checka att inom värde och isf adda men annars ej
-                            listAll[currModell] = listAll[currModell] + 1;
                             console.log("Yolo");
                             break
                         }
