@@ -180,7 +180,7 @@ module.exports = {
 
 
 
-            resolve("hej");
+            resolve(listAll);
 
         })
     },

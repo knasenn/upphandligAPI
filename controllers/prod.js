@@ -83,7 +83,9 @@ router.post("/search", verify, async (req, res) => {
         if (type == "gnss") {
             let gnssAll = await SearchMethods.getGnss();
             let result = await SearchMethods.filterResult(gnssAll, req.body);
-            res.json(result);
+            console.log(result);
+            //Gör om till json
+            res.json({result});
         }
         if (type == "totalstation") {
             let totalAll = await SearchMethods.getTodde();
